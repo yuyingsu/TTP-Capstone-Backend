@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const db = new Sequelize('postgres://postgres:osaka1994@localhost/school')
+const db = new Sequelize('postgres://postgres:password@localhost/school')
 const Campus = db.define('campus', {
   name: {
     type: Sequelize.STRING,
