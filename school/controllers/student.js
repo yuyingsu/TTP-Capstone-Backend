@@ -1,4 +1,4 @@
-const Student = require('../models/index');
+const Student = require('../models/index').Student;
 
 module.exports = {
   list(req, res) {

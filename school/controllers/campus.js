@@ -1,4 +1,4 @@
-const Campus = require('../models/index');
+const Campus = require('../models/index').Campus;
 
 module.exports = {
   list(req, res) {
