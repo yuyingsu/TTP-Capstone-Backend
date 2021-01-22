@@ -29,7 +29,8 @@ module.exports = {
         last_name: req.body.last_name,
         email: req.body.email,
         image_url: req.body.url,
-        gpa: req.body.gpa
+        gpa: req.body.gpa,
+        campus_id:req.body.campus_id
       })
       .then((student) => res.status(201).send(student))
       .catch((error) => res.status(400).send(error));
@@ -51,6 +52,7 @@ module.exports = {
             email: req.body.email || student.email,
             image_url: req.body.url || student.url,
             gpa: req.body.gpa || student.gpa,
+            campus_id: req.body.campus_id
           })
           .then(() => res.status(200).send(student))
           .catch((error) => res.status(400).send(error));
@@ -69,7 +71,7 @@ module.exports = {
         }
         return student
           .destroy()
-          .then(() => res.status(204).send())
+          .then(() => res.status(200).send(student))
           .catch((error) => res.status(400).send(error));
       })
       .catch((error) => res.status(400).send(error));

@@ -3,6 +3,7 @@ const db = new Sequelize('school', 'postgres', 'osaka1994', {
   host: 'localhost',
   dialect: 'postgres'
 });
+
 const Campus = db.define('campus', {
   name: {
     type: Sequelize.STRING,
@@ -10,7 +11,7 @@ const Campus = db.define('campus', {
   },
   image_url: {
     type: Sequelize.STRING,
-    default: "https://www.k3ma.com/wp-content/uploads/2017/04/default-image.jpg"
+    defaultValue: "https://www.k3ma.com/wp-content/uploads/2017/04/default-image.jpg"
   },
   address: {
     type: Sequelize.STRING,
@@ -66,7 +67,7 @@ const Student = db.define('student', {
   },
   image_url: {
     type: Sequelize.STRING,
-    default: "https://www.k3ma.com/wp-content/uploads/2017/04/default-image.jpg"
+    defaultValue: "https://www.k3ma.com/wp-content/uploads/2017/04/default-image.jpg"
   },
   gpa: {
     type: Sequelize.FLOAT,
