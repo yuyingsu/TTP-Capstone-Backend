@@ -5,8 +5,8 @@
 ### 1. Clone repo
 
 ```
-$ git clone git@github.com:scarcrux/ttp-capstone-backend.git
-$ cd ttp-capstone-backend
+$ git clone git@github.com:scarcrux/tpp-capstone-backend.git
+$ cd tpp-capstone-backend
 ```
 
 ### 2. Install MongoDB
