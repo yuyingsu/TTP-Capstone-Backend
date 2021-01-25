@@ -2,7 +2,7 @@ import express from 'express';
 import multer from 'multer';
 import multerS3 from 'multer-s3';
 import aws from 'aws-sdk';
-import config from '../config';
+import config from '../config.js';
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {

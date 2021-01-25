@@ -2,12 +2,13 @@ import express from 'express';
 import path from 'path';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
-import config from './config';
-import userRoute from './routes/userRoute';
-import productRoute from './routes/productRoute';
-import orderRoute from './routes/orderRoute';
-import uploadRoute from './routes/uploadRoute';
-
+import config from './config.js';
+import userRoute from './routes/userRoute.js';
+import productRoute from './routes/productRoute.js';
+import orderRoute from './routes/orderRoute.js';
+import uploadRoute from './routes/uploadRoute.js';
+import cors from 'cors';
+const __dirname = path.resolve();
 const mongodbUrl = config.MONGODB_URL;
 mongoose
   .connect(mongodbUrl, {
@@ -18,6 +19,7 @@ mongoose
   .catch((error) => console.log(error.reason));
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 app.use('/api/uploads', uploadRoute);
 app.use('/api/users', userRoute);

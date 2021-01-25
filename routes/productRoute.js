@@ -1,10 +1,11 @@
 import express from 'express';
-import Product from '../models/productModel';
-import { isAuth, isAdmin } from '../util';
+import Product from '../models/productModel.js';
+import { isAuth, isAdmin } from '../util.js';
 
 const router = express.Router();
 
 router.get('/', async (req, res) => {
+  try{
   const category = req.query.category ? { category: req.query.category } : {};
   const searchKeyword = req.query.searchKeyword
     ? {
@@ -19,10 +20,24 @@ router.get('/', async (req, res) => {
       ? { price: 1 }
       : { price: -1 }
     : { _id: -1 };
+  if(!req.query.page){
   const products = await Product.find({ ...category, ...searchKeyword }).sort(
     sortOrder
   );
   res.send(products);
+  }else{
+    const PAGE_SIZE = 3; 
+    const page = parseInt(req.query.page);
+    const skip = (page - 1) * PAGE_SIZE;
+    const products =  await Product.find({}).skip(skip).limit(PAGE_SIZE).sort(
+      sortOrder
+    );
+    res.send(products);
+  }
+  }
+  catch(e){
+    return res.status(500).json(e.message)
+  }
 });
 
 router.get('/:id', async (req, res) => {
@@ -105,6 +120,25 @@ router.post('/', isAuth, isAdmin, async (req, res) => {
       .send({ message: 'New Product Created', data: newProduct });
   }
   return res.status(500).send({ message: ' Error in Creating Product.' });
+});
+
+router.get('/', async (req, res) => {
+  try {
+    const PAGE_SIZE = 3; 
+    const page = parseInt(req.query.page);
+    const skip = (page - 1) * PAGE_SIZE;
+    const sortOrder = req.query.sortOrder
+    ? req.query.sortOrder === 'lowest'
+      ? { price: 1 }
+      : { price: -1 }
+    : { _id: -1 };
+    const products =  await Product.find({}).skip(skip).limit(PAGE_SIZE).sort(
+      sortOrder
+    );
+    res.send(products);
+  } catch(e){
+    return res.status(500).json(e.message)
+  }
 });
 
 export default router;

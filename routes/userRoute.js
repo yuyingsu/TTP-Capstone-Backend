@@ -1,6 +1,6 @@
 import express from 'express';
-import User from '../models/userModel';
-import { getToken, isAuth } from '../util';
+import User from '../models/userModel.js';
+import { getToken, isAuth } from '../util.js';
 
 const router = express.Router();
 
@@ -30,7 +30,7 @@ router.post('/signin', async (req, res) => {
     password: req.body.password,
   });
   if (signinUser) {
-    res.send({
+    res.status(200).send({
       _id: signinUser.id,
       name: signinUser.name,
       email: signinUser.email,
