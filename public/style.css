@@ -1,0 +1,111 @@
+/*
+ * Hi! I'm your stylesheet! I've got some sensible defaults here,
+ * but feel free to change me to your heart's content!
+ */
+
+* {
+  box-sizing: border-box;
+  font-family: arial, sans-serif;
+}
+
+
+a.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button.btn-remove {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body {
+  background: linear-gradient(#000000, #c0c0c0);
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  width: 100vw;
+}
+
+nav {
+  background-color: #333333;
+  color: #c0c0c0;
+  display: flex;
+  height: 55px;
+  padding: 10px;
+  width: 100%;
+}
+
+main {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+.footer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 2em;
+}
+
+.campus-list {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.container-add-pages {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.student-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.student {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px 0 15px 0;
+  background-color: #A9A9A9;
+  border-radius: 5px;
+  margin: 15px 15px;
+  color: black;
+}
+
+.campus-img {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px 0 15px 0;
+  background-color: #A9A9A9;
+  border-radius: 5px;
+  margin: 15px 15px;
+  color: black;
+}
+
+.addButton {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.header-fix {
+  padding-left: 15px;
+}
