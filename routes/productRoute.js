@@ -21,15 +21,23 @@ router.get('/', async (req, res) => {
       : { price: -1 }
     : { _id: -1 };
   if(!req.query.page){
-  const products = await Product.find({ ...category, ...searchKeyword }).sort(
+  const products = await Product.find({}).sort(
     sortOrder
   );
   res.send(products);
-  }else{
-    const PAGE_SIZE = 3; 
+  }else if(!req.query.searchKeyword){
+    const PAGE_SIZE = 3;
     const page = parseInt(req.query.page);
     const skip = (page - 1) * PAGE_SIZE;
     const products =  await Product.find({}).skip(skip).limit(PAGE_SIZE).sort(
+      sortOrder
+    );
+    res.send(products);
+  }else{
+    const PAGE_SIZE = 3;
+    const page = parseInt(req.query.page);
+    const skip = (page - 1) * PAGE_SIZE;
+    const products =  await Product.find({...searchKeyword}).skip(skip).limit(PAGE_SIZE).sort(
       sortOrder
     );
     res.send(products);
@@ -124,7 +132,7 @@ router.post('/', isAuth, isAdmin, async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    const PAGE_SIZE = 3; 
+    const PAGE_SIZE = 3;
     const page = parseInt(req.query.page);
     const skip = (page - 1) * PAGE_SIZE;
     const sortOrder = req.query.sortOrder
