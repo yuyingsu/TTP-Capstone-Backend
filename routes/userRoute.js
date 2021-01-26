@@ -1,6 +1,7 @@
 import express from 'express';
 import User from '../models/userModel.js';
 import { getToken, isAuth } from '../util.js';
+import bcrypt from 'bcryptjs';
 
 const router = express.Router();
 
@@ -10,7 +11,7 @@ router.put('/:id', isAuth, async (req, res) => {
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
-    user.password = req.body.password || user.password;
+    user.password = bcrypt.hashSync(req.body.password, 8) || bcrypt.hashSync(user.password, 8);
     const updatedUser = await user.save();
     res.send({
       _id: updatedUser.id,
@@ -27,18 +28,19 @@ router.put('/:id', isAuth, async (req, res) => {
 router.post('/signin', async (req, res) => {
   const signinUser = await User.findOne({
     email: req.body.email,
-    password: req.body.password,
   });
   if (signinUser) {
-    res.status(200).send({
-      _id: signinUser.id,
-      name: signinUser.name,
-      email: signinUser.email,
-      isAdmin: signinUser.isAdmin,
-      token: getToken(signinUser),
-    });
-  } else {
-    res.status(401).send({ message: 'Invalid Email or Password.' });
+    if (bcrypt.compareSync(req.body.password, user.password)) {
+      res.send({
+        _id: signinUser.id,
+        name: signinUser.name,
+        email: signinUser.email,
+        isAdmin: signinUser.isAdmin,
+        token: getToken(signinUser),
+      });
+    } else {
+      res.status(401).send({ message: 'Invalid Email or Password.' });
+    }
   }
 });
 
@@ -46,7 +48,7 @@ router.post('/register', async (req, res) => {
   const user = new User({
     name: req.body.name,
     email: req.body.email,
-    password: req.body.password,
+    password: bcrypt.hashSync(req.body.password, 8),
   });
   const newUser = await user.save();
   if (newUser) {
@@ -67,7 +69,7 @@ router.get('/createadmin', async (req, res) => {
     const user = new User({
       name: 'admin',
       email: 'admin@admin.com',
-      password: 'admin',
+      password: bcrypt.hashSync('admin', 8),
       isAdmin: true,
     });
     const newUser = await user.save();
