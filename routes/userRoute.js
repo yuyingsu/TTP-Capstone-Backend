@@ -30,7 +30,7 @@ router.post('/signin', async (req, res) => {
     email: req.body.email,
   });
   if (signinUser) {
-    if (bcrypt.compareSync(req.body.password, user.password)) {
+    if (bcrypt.compareSync(req.body.password, signinUser.password)) {
       res.send({
         _id: signinUser.id,
         name: signinUser.name,
