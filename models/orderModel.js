@@ -1,9 +1,10 @@
 import mongoose from 'mongoose';
 const shippingSchema = {
   address: { type: String, required: true },
+  address2: { type: String, required: false},
   city: { type: String, required: true },
-  postalCode: { type: String, required: true },
-  country: { type: String, required: true },
+  state: { type: String, required: true },
+  zip: { type: String, required: true },
 };
 
 const paymentSchema = {
@@ -15,7 +16,7 @@ const orderItemSchema = new mongoose.Schema({
   qty: { type: Number, required: true },
   image: { type: String, required: true },
   price: { type: String, required: true },
-  product: {
+  _id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Product',
     required: true

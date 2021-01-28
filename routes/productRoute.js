@@ -1,6 +1,7 @@
 import express from 'express';
 import Product from '../models/productModel.js';
 import { isAuth, isAdmin } from '../util.js';
+import mongoose from 'mongoose'
 
 const router = express.Router();
 
@@ -49,13 +50,21 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-  const product = await Product.findOne({ _id: req.params.id });
-  if (product) {
-    res.send(product);
-  } else {
-    res.status(404).send({ message: 'Product Not Found.' });
+  let id = mongoose.Types.ObjectId(req.params.id);
+  const product = await Product.findById(id);
+  try {
+    const product = await Product.findOne({ _id: req.params.id });
+    if (product) {
+      res.send(product);
+    } else {
+      res.status(404).send({ message: 'Product Not Found.' });
+    }
+    }
+  catch(e) {
+    return res.status(500).json(e.message);
   }
 });
+
 router.post('/:id/reviews', isAuth, async (req, res) => {
   const product = await Product.findById(req.params.id);
   if (product) {
@@ -86,7 +95,7 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
     product.price = req.body.price;
     product.image = req.body.image;
     product.brand = req.body.brand;
-    product.category = req.body.category;
+    product.category = req.body.category||"";
     product.countInStock = req.body.countInStock;
     product.description = req.body.description;
     const updatedProduct = await product.save();
@@ -103,7 +112,7 @@ router.delete('/:id', isAuth, isAdmin, async (req, res) => {
   const deletedProduct = await Product.findById(req.params.id);
   if (deletedProduct) {
     await deletedProduct.remove();
-    res.send({ message: 'Product Deleted' });
+    res.send(deletedProduct);
   } else {
     res.send('Error in Deletion.');
   }
@@ -115,11 +124,11 @@ router.post('/', isAuth, isAdmin, async (req, res) => {
     price: req.body.price,
     image: req.body.image,
     brand: req.body.brand,
-    category: req.body.category,
+    category: req.body.category||"",
     countInStock: req.body.countInStock,
     description: req.body.description,
     rating: req.body.rating,
-    numReviews: req.body.numReviews,
+    numReviews: req.body.numReviews || "0",
   });
   const newProduct = await product.save();
   if (newProduct) {
