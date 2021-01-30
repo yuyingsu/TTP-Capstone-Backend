@@ -28,12 +28,12 @@ router.delete("/:id", isAuth, isAdmin, async (req, res) => {
     const deletedOrder = await order.remove();
     res.send(deletedOrder);
   } else {
-    res.status(404).send("Order Not Found.")
+    res.status(404).send(deletedOrder)
   }
 });
 
 router.post("/", isAuth, async (req, res) => {
-  //console.log(req.body.orderItems)
+  console.log(req.body.orderItems);
   const newOrder = new Order({
     orderItems: req.body.orderItems,
     user: req.user._id,
@@ -48,19 +48,13 @@ router.post("/", isAuth, async (req, res) => {
   res.status(201).send({ message: "New Order Created", data: newOrderCreated });
 });
 
-router.put("/:id/pay", isAuth, async (req, res) => {
+router.put("/:id/deliver", isAuth, async (req, res) => {
   const order = await Order.findById(req.params.id);
   if (order) {
-    order.isPaid = true;
-    order.paidAt = Date.now();
-    order.paymentResult = {
-      id: req.body.id,
-      status: req.body.status,
-      update_time: req.body.update_time,
-      email_address: req.body.email_address,
-    };
+    order.isDelivered = true ;
+    order.deliveredAt = new Date();
     const updatedOrder = await order.save();
-    res.send({ message: 'Order Paid', order: updatedOrder });
+    res.send(updatedOrder);
   } else {
     res.status(404).send({ message: 'Order Not Found' });
   }
