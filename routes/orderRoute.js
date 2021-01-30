@@ -56,8 +56,9 @@ router.put("/:id/deliver", isAuth, async (req, res) => {
     const updatedOrder = await order.save();
     res.send(updatedOrder);
   } else {
-    res.status(404).send({ message: 'Order not found.' })
+    res.status(404).send({ message: 'Order Not Found' });
   }
-});
+}
+);
 
 export default router;
