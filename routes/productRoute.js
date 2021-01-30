@@ -8,6 +8,7 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   try{
   const category = req.query.category ? { category: req.query.category } : {};
+  console.log(req.query.sortOrder);
   const searchKeyword = req.query.searchKeyword
     ? {
         name: {
@@ -16,32 +17,34 @@ router.get('/', async (req, res) => {
         },
       }
     : {};
-  const sortOrder = req.query.sortOrder
+  const sortOrder = req.query.sortOrder !== 'newest'
     ? req.query.sortOrder === 'lowest'
       ? { price: 1 }
       : { price: -1 }
     : { _id: -1 };
+  console.log(req.query.searchKeyword);
   if(!req.query.page){
   const products = await Product.find({}).sort(
     sortOrder
   );
   res.send(products);
-  }else if(!req.query.searchKeyword){
+  }else if(req.query.searchKeyword==='undefined'){
     const PAGE_SIZE = 3;
     const page = parseInt(req.query.page);
     const skip = (page - 1) * PAGE_SIZE;
     const products =  await Product.find({}).skip(skip).limit(PAGE_SIZE).sort(
       sortOrder
     );
-    res.send(products);
+    res.send({products: products});
   }else{
+    const total = await Product.find({...searchKeyword});
     const PAGE_SIZE = 3;
     const page = parseInt(req.query.page);
     const skip = (page - 1) * PAGE_SIZE;
     const products =  await Product.find({...searchKeyword}).skip(skip).limit(PAGE_SIZE).sort(
       sortOrder
     );
-    res.send(products);
+    res.send({products:products,total:total});
   }
   }
   catch(e){
@@ -102,7 +105,7 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
     if (updatedProduct) {
       return res
         .status(200)
-        .send({ message: 'Product Updated', data: updatedProduct });
+        .send(updatedProduct);
     }
   }
   return res.status(500).send({ message: ' Error in Updating Product.' });
@@ -134,7 +137,7 @@ router.post('/', isAuth, isAdmin, async (req, res) => {
   if (newProduct) {
     return res
       .status(201)
-      .send({ message: 'New Product Created', data: newProduct });
+      .send(newProduct);
   }
   return res.status(500).send({ message: ' Error in Creating Product.' });
 });
