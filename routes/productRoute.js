@@ -102,7 +102,7 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
     if (updatedProduct) {
       return res
         .status(200)
-        .send({ message: 'Product Updated', data: updatedProduct });
+        .send({ updatedProduct });
     }
   }
   return res.status(500).send({ message: ' Error in Updating Product.' });
@@ -134,7 +134,7 @@ router.post('/', isAuth, isAdmin, async (req, res) => {
   if (newProduct) {
     return res
       .status(201)
-      .send({ message: 'New Product Created', data: newProduct });
+      .send({ newProduct });
   }
   return res.status(500).send({ message: ' Error in Creating Product.' });
 });

@@ -28,7 +28,7 @@ aws.config.update({
 const s3 = new aws.S3();
 const storageS3 = multerS3({
   s3,
-  bucket: 'amazona-bucket',
+  bucket: 'gamerdotcom-bucket',
   acl: 'public-read',
   contentType: multerS3.AUTO_CONTENT_TYPE,
   key(req, file, cb) {

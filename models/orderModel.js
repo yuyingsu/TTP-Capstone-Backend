@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 const shippingSchema = {
+  fullName: { type: String, required: true },
   address: { type: String, required: true },
   address2: { type: String, required: false},
   city: { type: String, required: true },
@@ -28,6 +29,12 @@ const orderSchema = new mongoose.Schema({
   orderItems: [orderItemSchema],
   shipping: shippingSchema,
   payment: paymentSchema,
+  paymentResult: {
+    id: String,
+    status: String,
+    update_time: String,
+    email_address: String,
+  },
   itemsPrice: { type: Number },
   taxPrice: { type: Number },
   shippingPrice: { type: Number },
