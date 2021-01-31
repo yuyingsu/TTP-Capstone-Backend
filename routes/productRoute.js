@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
   );
   res.send(products);
   }else if(req.query.searchKeyword==='undefined'){
-    const PAGE_SIZE = 3;
+    const PAGE_SIZE = 6;
     const page = parseInt(req.query.page);
     const skip = (page - 1) * PAGE_SIZE;
     const products =  await Product.find({}).skip(skip).limit(PAGE_SIZE).sort(
@@ -38,7 +38,7 @@ router.get('/', async (req, res) => {
     res.send({products: products});
   }else{
     const total = await Product.find({...searchKeyword});
-    const PAGE_SIZE = 3;
+    const PAGE_SIZE = 6;
     const page = parseInt(req.query.page);
     const skip = (page - 1) * PAGE_SIZE;
     const products =  await Product.find({...searchKeyword}).skip(skip).limit(PAGE_SIZE).sort(
