@@ -10,8 +10,9 @@ import uploadRoute from './routes/uploadRoute.js';
 import cors from 'cors';
 const __dirname = path.resolve();
 const mongodbUrl = config.MONGODB_URL;
+const mongodbUri = config.URI;
 mongoose
-  .connect(mongodbUrl, {
+  .connect(mongodbUri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
