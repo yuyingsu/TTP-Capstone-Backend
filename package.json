@@ -5,7 +5,6 @@
   "main": ".eslintrc.js",
   "scripts": {
     "start": "nodemon --watch --exec babel-node server.js",
-    "build": "rm -rf dist && babel -d dist",
   },
   "author": "",
   "license": "ISC",
