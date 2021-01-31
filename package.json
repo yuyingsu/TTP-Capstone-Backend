@@ -4,7 +4,7 @@
   "description": "",
   "main": ".eslintrc.js",
   "scripts": {
-    "start": "--exec babel-node server.js"
+    "start": "babel-node server.js"
   },
   "author": "",
   "license": "ISC",
