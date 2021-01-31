@@ -9,7 +9,7 @@ import orderRoute from './routes/orderRoute.js';
 import uploadRoute from './routes/uploadRoute.js';
 import cors from 'cors';
 const __dirname = path.resolve();
-const mongodbUrl = config.MONGODB_URL;
+// const mongodbUrl = config.MONGODB_URL;
 const mongodbUri = config.URI;
 mongoose
   .connect(mongodbUri, {
